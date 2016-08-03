@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "World Of Warcraft Forum Enhancements",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.battle.net/forums/*/wow/*"
+      ],
+      "js": ["jquery-3.1.0.min.js", "content.js"],
+      "css": ["styling.css"]
+    }
+  ]
+}

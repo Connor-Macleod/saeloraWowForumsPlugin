@@ -1,0 +1,17 @@
+.opPost .Author-name{
+    border-bottom: 2px solid goldenrod;
+}
+.Author-avatar {
+    position: relative;
+}
+.customAvatar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.myPost .Author-avatar{
+    border: 1px solid yellow;
+}
