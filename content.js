@@ -21,7 +21,7 @@ $(document).ready(function ($) {
             if (!myCharacters[character.realm]) {
                 myCharacters[character.realm] = [];
             }
-            myCharacters[character.realm].push(character.name)
+            myCharacters[character.realm].push(character.name);
         })
         me.myCharacters = myCharacters;
     }
@@ -43,7 +43,8 @@ $(document).ready(function ($) {
         });
         $postDom.find(".customAvatar").on("load", function () {
             $(this).siblings("img:not(.customAvatar)").hide();
-        })
+        });
+        getTrpProfile(postData.author.id, $postDom)
     }
     function loadFirstPageForParsing() {
         var params = getLocationQueryParams();
@@ -78,5 +79,37 @@ $(document).ready(function ($) {
             resultantObject[pair[0]] = pair[1]
         }
         return resultantObject;
+    }
+    function getTrpProfile(id, postDom) {
+        $.get('http://wow.saelora.com/profiles/' + id + '.json', function (data) {
+            data.id = id;
+            insertProfile(data, postDom);
+        }, "json");
+    }
+    function insertProfile(character, $postDom) {
+        if (character.player.characteristics.LN) {
+            var oldname = $postDom.find('.Author .Author-name a').text()
+            $postDom.find('.Author-name > a').html(character.player.characteristics.TI + " " +
+                character.player.characteristics.FN + " " +
+                character.player.characteristics.LN +
+                " <span class='oldName'>(" + oldname + ")</span>");
+            var oldClass = $postDom.find(".Author-class").text();
+            var level = oldClass.split(" ")[0];
+            var newClass = level + " " + character.player.characteristics.RA +
+                " " + character.player.characteristics.CL;
+            $postDom.find(".Author-class").text(newClass);
+            $postDom.find(".Author-class").css("color", "#" + character.player.characteristics.CH);
+            $postDom.find(".Author-avatar").after("<div class='profileButton'/>");
+            $postDom.find(".profileButton").text("Profile");
+            $postDom.find(".profileButton").click(function () {
+                var content = $("<div class='profilePopup'><div class='profileContent'><div class='profileImage'><img class='customAvatar' src='http://wow.saelora.com/avatars/" + character.id + ".png'></img></div><div class='profileName'>" +
+                    character.player.characteristics.TI + " " +
+                    character.player.characteristics.FN + " " +
+                    character.player.characteristics.LN +
+                    "</div></div></div>");
+
+                $("body").append(content);
+            });
+        }
     }
 });

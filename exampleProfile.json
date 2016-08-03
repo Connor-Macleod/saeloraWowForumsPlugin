@@ -1,0 +1,95 @@
+{
+    "inventory": {
+        "id": "main",
+        "totalWeight": 0,
+        "content": {
+        }
+    },
+    "player": {
+        "characteristics": {
+            "LN": "Sinanar'diel-starpell",
+            "MI": {
+            },
+            "FN": "Sælora",
+            "AG": "Youthful",
+            "CL": "Mage",
+            "EH": "6005ff",
+            "HE": "Tall",
+            "CH": "33f0ff",
+            "RA": "Quel'dorei",
+            "RE": "Amber Ledge - Northerend",
+            "v": 7,
+            "BP": "Quel'thalas",
+            "IC": "Achievement_Character_Bloodelf_Female",
+            "FT": "Quel'dorei Mage",
+            "PS": {
+            },
+            "TI": "Lady",
+            "EC": "Arcane-blue",
+            "WE": "Slim and lightly muscled."
+        },
+        "character": {
+            "CO": "",
+            "RP": 1,
+            "v": 5,
+            "XP": 2,
+            "CU": "a purple shooting star takes the place of the pattern on the back of her dress"
+        },
+        "about": {
+            "T2": {
+            },
+            "T3": {
+                "PH": {
+                    "BK": 1
+                },
+                "PS": {
+                    "BK": 1
+                },
+                "HI": {
+                    "BK": 1
+                }
+            },
+            "TE": 1,
+            "T1": {
+                "TX": "{h1:c}{col:362212}Sælora Sinanar'diel{/h1}\n\n{h2}{col:362212}Apperance{/h2}\n\n{h3}{col:362212}Face{/h3}\n{col:362212}If not for the apparent youthfulness of Sælora's features, her featurres could be described as creul, as it is the best description is 'sharp'.\nThose who try to look her in the eye may notice green irises behind the distracting blue glow of her eyes.{/col}\n\n{h3}{col:362212}Hair{/h3}\n{col:362212}Sælora sports the natural blonde hair of her kin, usually pulled back in a tight tail and clasped with varying clasps, changing day-to-day.\n\nWhen untied, usually in the evenings, her hair hangs loosely across her shoulders in long golden tresses, wavy, thanks to the amount of time she spends with it tied back in a tail.\n\n{h2}{col:362212}History{/h2}\n\n{col:362212}Known to some as Lady Starspell, and others as Sælora Sinanar'diel, but allowing most to call her Lora, Sælora is surprisingly enigmatic for someone who seems to say a lot about herself, without really telling anything.\n\nThose who dig into Sælora's past soon find a confusing net of contradictions and impossibilities, including a mixture of the truth, blatant lies and some more subtle deceptions.\n\nSome sources show Lora as a paladin, althogh few agree on what order, if any, she belongs to. Others list her as an unaffiliated mage, while most agree that she has strong mercenary proclivities, althogh those often disagree with one and another.\n\nThose who dig deeper in an attempt to find more about her past, will find that information grows thin prior to the first war, with a few references to a wandering magi that fits her description. Before that, the only mention of a Sælora Sinanar'diel are of the adopted heir of the Starspell family.\n\nThose who manage to track that far into Sælora's's history may notice a slight discrepancy, extremely unlikely to be found out, but the child Saelora sinanar'diel has a much rounder face than is likely ot have developed into Sælora's narrow features.\n\n\n\n\n\n\n\n\n"
+            },
+            "MU": "GlueScreenMusic\\BCCredits_Lament_of_the_Highborne",
+            "BK": 8,
+            "v": 14
+        },
+        "misc": {
+            "ST": {
+                "1": 2,
+                "3": 2,
+                "2": 1,
+                "5": 4,
+                "4": 3,
+                "6": 1
+            },
+            "PE": {
+                "1": {
+                    "AC": true,
+                    "TI": "Apple Aroma",
+                    "IC": "INV_Misc_Food_21",
+                    "TX": "A smell of apples hangs around Sælora like a cloak.\nThose with sensitive noses may note that apples is all that she smells off."
+                },
+                "3": {
+                    "AC": true,
+                    "TI": "Enchanted Scythe",
+                    "IC": "INV_Misc_2h_FarmScythe_A_01",
+                    "TX": "Sælora has an enchanted scythe upon her back. Even those with skill at identifying enchantments may have trouble recognising the magic upon it."
+                },
+                "5": {
+                    "AC": true,
+                    "TI": "Magical Aura",
+                    "IC": "SPELL_HOLY_DISPELMAGIC",
+                    "TX": "A magical aura hangs around Sælora, identifying her easily as a mage, while also obscuring other forms of magic upon her and her equipment."
+                }
+            },
+            "v": 18
+        }
+    },
+    "questlog": {
+    },
+    "profileName": "Argent Dawn - Sælora"
+}
