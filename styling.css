@@ -154,3 +154,7 @@ div.Author-details{
     height: 100%;
     background: rgba(0,0,0,0.8);
 }
+
+.icGuild .Author-guild a{
+    color: rgba(200,255,200,.7)!important;
+}

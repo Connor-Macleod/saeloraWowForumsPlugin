@@ -98,6 +98,9 @@ $(document).ready(function ($) {
             var newClass = level + " " + character.player.characteristics.RA +
                 " " + character.player.characteristics.CL;
             var isICGuild = (character.player.misc.ST[6] === 1);
+            if (isICGuild) {
+                $postDom.addClass("icGuild")
+            }
             $postDom.find(".Author-class").text(newClass);
             $postDom.find(".Author-class").css("color", "#" + character.player.characteristics.CH);
             $postDom.find(".Author-avatar").after("<div class='profileButton'/>");
