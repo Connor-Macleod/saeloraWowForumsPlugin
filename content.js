@@ -97,18 +97,26 @@ $(document).ready(function ($) {
             var level = oldClass.split(" ")[0];
             var newClass = level + " " + character.player.characteristics.RA +
                 " " + character.player.characteristics.CL;
+            var isICGuild = (character.player.misc.ST[6] === 1);
             $postDom.find(".Author-class").text(newClass);
             $postDom.find(".Author-class").css("color", "#" + character.player.characteristics.CH);
             $postDom.find(".Author-avatar").after("<div class='profileButton'/>");
             $postDom.find(".profileButton").text("Profile");
             $postDom.find(".profileButton").click(function () {
-                var content = $("<div class='profilePopup'><div class='profileContent'><div class='profileImage'><img class='customAvatar' src='http://wow.saelora.com/avatars/" + character.id + ".png'></img></div><div class='profileName'>" +
+                var content = "<div class='closeBlind'><div class='profilePopup'><div class='profileContent'><div class='profileImage'><img class='customAvatar' src='http://wow.saelora.com/avatars/" + character.id + ".png'></img></div><div class='profileName'>" +
                     character.player.characteristics.TI + " " +
                     character.player.characteristics.FN + " " +
                     character.player.characteristics.LN +
-                    "</div></div></div>");
-
-                $("body").append(content);
+                    "</div>" + "<div class='characterClass'>" +
+                    newClass +
+                    "</div>" + (isICGuild ? "<div class='characterGuild'>" + $postDom.find(".Author-guild a").text().replace(/>/g, "&gt;").replace(/</g, "&lt;") + "</div>" : "") +
+                    "</div></div></div>"
+                var $content = $(content);
+                $content.find('.characterClass').css("color", "#" + character.player.characteristics.CH);
+                $("body").append($content);
+                $('body').on("click", ".closeBlind", function () {
+                    $content.remove();
+                });
             });
         }
     }
