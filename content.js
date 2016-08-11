@@ -13,6 +13,8 @@ $(document).ready(function ($) {
     function allAboutMe() {
         var myCharacters = {};
         var charactersDom = $('.CharacterSelect-modal .Characters .Author');
+        $('body').append("<script id='popupTemplate' type='text/template' ></script>");
+        $('#popupTemplate').load(chrome.extension.getURL('popup_template.html'));
         charactersDom.each(function (i, characterDom) {
             var $characterDom = $(characterDom);
             var profileUrl = $characterDom.find(".Author-avatar").attr("href");
@@ -40,9 +42,6 @@ $(document).ready(function ($) {
         $postDom.find('.Author-avatar').append('<img class="customAvatar" src="http://wow.saelora.com/avatars/' + postData.author.id + '.png" />')
         $postDom.find(".customAvatar").on("error", function () {
             $(this).hide();
-        });
-        $postDom.find(".customAvatar").on("load", function () {
-            $(this).siblings("img:not(.customAvatar)").hide();
         });
         getTrpProfile(postData.author.id, $postDom)
     }
@@ -82,45 +81,94 @@ $(document).ready(function ($) {
     }
     function getTrpProfile(id, postDom) {
         $.get('http://wow.saelora.com/profiles/' + id + '.json', function (data) {
-            data.id = id;
-            insertProfile(data, postDom);
+            if (data.error){
+                //do nothing
+            } else {
+                data.id = id;
+                insertProfile(data, postDom);
+            }
         }, "json");
     }
     function insertProfile(character, $postDom) {
         if (character.player.characteristics.LN) {
             var oldname = $postDom.find('.Author .Author-name a').text()
-            $postDom.find('.Author-name > a').html(character.player.characteristics.TI + " " +
-                character.player.characteristics.FN + " " +
-                character.player.characteristics.LN +
-                " <span class='oldName'>(" + oldname + ")</span>");
-            var oldClass = $postDom.find(".Author-class").text();
-            var level = oldClass.split(" ")[0];
-            var newClass = level + " " + character.player.characteristics.RA +
-                " " + character.player.characteristics.CL;
-            var isICGuild = (character.player.misc.ST[6] === 1);
-            if (isICGuild) {
-                $postDom.addClass("icGuild")
+            if (character.player.characteristics.FN || character.player.characteristics.LN) {
+                $postDom.find('.Author-name > a').html((character.player.characteristics.TI ? (character.player.characteristics.TI + " ") : "") +
+                    (character.player.characteristics.FN ? (character.player.characteristics.FN + " ") : "") +
+                    (character.player.characteristics.LN ? character.player.characteristics.LN : "") +
+                    " <span class='oldName'>(" + oldname + ")</span>");
+            }
+            var newClass;
+            if (character.player.characteristics.RA && character.player.characteristics.CL) {
+                var oldClass = $postDom.find(".Author-class").text();
+                var level = oldClass.split(" ")[0];
+                newClass = level + " " + character.player.characteristics.RA +
+                    " " + character.player.characteristics.CL;
+            } else if (character.player.characteristics.RA) {
+                var oldClass = $postDom.find(".Author-class").text();
+                var oldparams = oldClass.split(" ");
+                var level = oldparams[0];
+                newClass = level + " " + character.player.characteristics.RA +
+                    " "
+                    + ((oldparams[2] === "Elf") ? oldparams[3] + " " + (oldparams[4] ? oldparams[4] + " " : "") : oldparams[2] + (oldparams[3] ? " " + oldparams[3] : ""));
+            } else if (character.player.characteristics.CL) {
+                var oldClass = $postDom.find(".Author-class").text();
+                var oldparams = oldClass.split(" ");
+                var level = oldparams[0];
+                newClass = level + " " + ((oldparams[2] === "Elf") ? oldparams[1] + " " + oldparams[2] : oldparams[1]) +
+                    " "
+                    + character.player.characteristics.CL;
+            } else {
+                newClass = $postDom.find(".Author-class").text();
             }
             $postDom.find(".Author-class").text(newClass);
+            var isICGuild = (character.player.misc.ST[6] === 1);
+            if (isICGuild) {
+                $postDom.addClass("icGuild");
+            }
             $postDom.find(".Author-class").css("color", "#" + character.player.characteristics.CH);
             $postDom.find(".Author-avatar").after("<div class='profileButton'/>");
             $postDom.find(".profileButton").text("Profile");
             $postDom.find(".profileButton").click(function () {
-                var content = "<div class='closeBlind'><div class='profilePopup'><div class='profileContent'><div class='profileImage'><img class='customAvatar' src='http://wow.saelora.com/avatars/" + character.id + ".png'></img></div><div class='profileName'>" +
-                    character.player.characteristics.TI + " " +
-                    character.player.characteristics.FN + " " +
-                    character.player.characteristics.LN +
-                    "</div>" + "<div class='characterClass'>" +
-                    newClass +
-                    "</div>" + (isICGuild ? "<div class='characterGuild'>" + $postDom.find(".Author-guild a").text().replace(/>/g, "&gt;").replace(/</g, "&lt;") + "</div>" : "") +
-                    "</div></div></div>"
-                var $content = $(content);
+                var content = $('#popupTemplate').html();
+                content = content.replace(/&lt;/gi, "<");
+                content = content.replace(/&gt;/gi, ">");
+                content = content.replace(/&amp;/gi, "&");
+                var contentTemplate = _.template(content);
+                var contentCompiled = contentTemplate({character: character, $postDom: $postDom, isICGuild: isICGuild, formatAbout: formatAbout, newClass: newClass});
+                var $content = $(contentCompiled);
                 $content.find('.characterClass').css("color", "#" + character.player.characteristics.CH);
                 $("body").append($content);
-                $('body').on("click", ".closeBlind", function () {
+                $(".closeBlind, .profileClose").on("click", function () {
                     $content.remove();
                 });
+                $(".closeBlind .profilePopup").click(function (e) {
+                    e.stopPropagation();
+                });
+
+                $(".profileTabs .tab").on("click", function () {
+                    $(".profileTabs .tab").removeClass('selected');
+                    $(".tabBodies > div").removeClass('selected');
+                    $(this).closest('.tab').addClass('selected');
+                    $(".tabBodies > div." + $(this).data('target')).addClass('selected');
+                });
+
             });
         }
+    }
+    function formatAbout(about) {
+        about = about || "{h1:c}{col:362212}Sælora Sinanar'diel{/h1}\n\n{h2}{col:362212}Apperance{/h2}\n\n{h3}{col:362212}Face{/h3}\n{col:362212}If not for the apparent youthfulness of Sælora's features, her featurres could be described as creul, as it is the best description is 'sharp'.\nThose who try to look her in the eye may notice green irises behind the distracting blue glow of her eyes.{/col}\n\n{h3}{col:362212}Hair{/h3}\n{col:362212}Sælora sports the natural blonde hair of her kin, usually pulled back in a tight tail and clasped with varying clasps, changing day-to-day.\n\nWhen untied, usually in the evenings, her hair hangs loosely across her shoulders in long golden tresses, wavy, thanks to the amount of time she spends with it tied back in a tail.\n\n{h2}{col:362212}History{/h2}\n\n{col:362212}Known to some as Lady Starspell, and others as Sælora Sinanar'diel, but allowing most to call her Lora, Sælora is surprisingly enigmatic for someone who seems to say a lot about herself, without really telling anything.\n\nThose who dig into Sælora's past soon find a confusing net of contradictions and impossibilities, including a mixture of the truth, blatant lies and some more subtle deceptions.\n\nSome sources show Lora as a paladin, althogh few agree on what order, if any, she belongs to. Others list her as an unaffiliated mage, while most agree that she has strong mercenary proclivities, althogh those often disagree with one and another.\n\nThose who dig deeper in an attempt to find more about her past, will find that information grows thin prior to the first war, with a few references to a wandering magi that fits her description. Before that, the only mention of a Sælora Sinanar'diel are of the adopted heir of the Starspell family.\n\nThose who manage to track that far into Sælora's's history may notice a slight discrepancy, extremely unlikely to be found out, but the child Saelora sinanar'diel has a much rounder face than is likely ot have developed into Sælora's narrow features.\n\n\n\n\n\n\n\n\n";
+        var replacements = {
+            "<br />": /\n+?/gmi,
+            "<span style='color: #$1'>$2</span>": /\{col:(\d{6})}([^{]*?)\{\/col}/gim,
+            "<span style='color: #$1'>$2</span>$3": /\{col:(\d{6})}([^{]*?)(\{)/gim, //TODO: improve the shit out of this
+            "<h$1>$2</h$1>": /\n?\{h(\d)}([^{]*?)(\{\/h\d})\n?/gim,
+            "<h$1 class='centered'>$2</h$1>": /\n?\{h(\d):c}([^{]*?)(\{\/h\d})\n?/gim,
+            "<span style='color: #$1'>$2</span> ": /\{col:(\d{6})}([^{]*?)$/gim
+        };
+        $.each(replacements, function (replace, match) {
+            about = about.replace(match, replace);
+        });
+        return about;
     }
 });

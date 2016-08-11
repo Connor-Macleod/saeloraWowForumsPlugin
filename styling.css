@@ -99,6 +99,7 @@ div.Author-details{
     left: 0;
     z-index: 1000;
     background: linear-gradient(to right, rgba(255,204,0,0.3) 0%, rgba(255,204,0,0.9) 50%, rgba(255,204,0,0.3) 100%);
+    display: flex; flex-direction: column;
 
 
 }
@@ -117,11 +118,20 @@ div.Author-details{
     bottom: 0;
 }
 
-.profilePopup .profileContent{
+.profilePopup .profileContent .profileContentConstrain{
     width: 100%;
     max-width: 1200px;
     margin: auto;
     padding: 20px;
+    position: relative;
+}
+
+.profilePopup .profileClose{
+    position: absolute;
+    top:   20px;
+    right: 20px;
+    cursor: pointer;
+    padding: 5px;
 }
 
 .profilePopup .profileImage{
@@ -138,9 +148,9 @@ div.Author-details{
 }
 
 .profilePopup .profileName{
-    font-size: 20px;
     color: white;
     font-size: 1.0625rem;
+    font-weight: bold;
 }
 
 .closeBlind{
@@ -155,6 +165,150 @@ div.Author-details{
     background: rgba(0,0,0,0.8);
 }
 
-.icGuild .Author-guild a{
+.icGuild .Author-guild a, .characterGuild{
     color: rgba(200,255,200,.7)!important;
+}
+
+.characterTitle{
+    color: white;
+}
+.profilePopup .profileContent::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 204, 0, 0.298039) 0%, rgb(255, 204, 0) 50%, rgba(255, 204, 0, 0.298039) 100%);
+}
+.profilePopup .tabBodies{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    overflow-y: auto;
+    color: white;
+    flex-grow: 1;
+
+}
+.profilePopup .profileBodyRegion{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.tabBodies::-webkit-scrollbar {
+    width: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.tabBodies::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+.profileTabs{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    height: 42px;
+}
+.profileTabs:after{
+    content: "";
+    clear: both;
+}
+
+.profileTabs .tab{
+    border-bottom: 2px solid white;
+    color: white;
+    margin: 10px 5px 0px;
+    float: left;
+}
+
+.profileTabs .tab.selected{
+    border-bottom: 2px solid transparent;
+    color: white;
+}
+
+.tabBodies>div{
+    display: none;
+}
+.tabBodies>div.selected{
+    display: block;
+}
+.characteristic{
+    width: 100%;
+}
+.characteristic:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+.characteristic .title{
+    width: 130px;
+    border-right: 1px solid white;
+    float: left;
+    padding: 10px;
+    text-align: right;
+    height: 100%;
+}
+.characteristic .value{
+    width: calc(100% - 130px);
+    padding: 10px;
+    float: right;
+    clear: right;
+}
+.atAGlance:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+.glance{
+    float: left;
+    position: relative;
+}
+
+.glance .glanceIcon{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border: 1px solid grey;
+}
+.glance .glanceIcon img{
+    display: block;
+    width: 100%;
+}
+.glance:hover .glanceHover{
+    display: block;
+}
+.glance .glanceHover{
+    display: none;
+    position: absolute;
+    width: 300px;
+    background: rgba(200,200,255,0.8);
+    color: white;
+    padding: 20px;
+    z-index: 500;
+    left: -135px;
+    border: rgb(200,200,255) 1px solid;
+    border-radius: 20px;
+    top: 50px;
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.glance .glanceHover:before{
+    content: "";
+    display: block;
+    border-bottom: rgb(200,200,255) 20px solid;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    top: -20px;
+    left: 140px;
+    position: absolute;
+}
+.glance .glanceHover .title{
+    font-weight: bold;
 }

@@ -1,0 +1,135 @@
+<div class='closeBlind'>
+    <div class='profilePopup'>
+        <div class='profileContent'>
+            <div class='profileContentConstrain'>
+                <div class='profileImage'>
+                    <img class='customAvatar' src='http://wow.saelora.com/avatars/<%= character.id %>.png'></img>
+                </div>
+                <div class='profileName'>
+                    <%= character.player.characteristics.TI %>
+                    <%= character.player.characteristics.FN %>
+                    <%= character.player.characteristics.LN %>
+                </div>
+                <div class='profileClose'>✕
+                </div>
+                <div class='characterClass'> <%= newClass %>
+                </div>
+                <% if(isICGuild) { %><div class='characterGuild'><%= $postDom.find(".Author-guild a").text().replace(/>/g, "&gt;").replace(/</g, "&lt;") %></div><% } %>
+                <div class='characterTitle'><%= character.player.characteristics.FT %>
+                </div>
+                <div class="atAGlance">
+                    <%
+                    for (var i=5; i--;){
+                    if ( character.player.misc.PE[i+1] ) {
+                    %>
+                    <div class="glance">
+                        <div class="glanceIcon">
+                            <img src="http://wow.saelora.com/icons/<%= character.player.misc.PE[i+1].IC.toLowerCase() %>.jpg" alt="icon" />
+                        </div>
+                        <div class="glanceHover">
+                            <div class="title">
+                                <%= character.player.misc.PE[i+1].TI %>
+                            </div>
+                            <div class="description">
+                                <%= character.player.misc.PE[i+1].TX %>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                    } else {
+                    %>
+                    <div class="glance">
+                        <div class="glanceIcon" style="opacity:0.4">
+                            <img src="http://wow.saelora.com/icons/wow_token02.jpg" alt="icon" />
+                        </div>
+                    </div>
+                    <%
+                    }
+                    }
+                    %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class='profileBodyRegion'>
+            <div class='profileTabs'>
+                <div class='tab selected' data-target='profileCharacteristics'>
+                    Characteristics
+                </div>
+                <div class='tab' data-target='profileBody'>
+                    About
+                </div>
+            </div>
+            <div class="tabBodies">
+                <div class='profileCharacteristics selected'>
+                    <div class="characteristic">
+                        <div class="title">
+                            Race
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.RA %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Class
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.CL %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Age
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.AG %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Eye Colour
+                        </div>
+                        <div class="value" style="color: #<%= character.player.characteristics.EH %>">
+                            <%= character.player.characteristics.EC %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Height
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.HE %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Body Shape
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.WE %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Birthplace
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.BP %>
+                        </div>
+                    </div>
+                    <div class="characteristic">
+                        <div class="title">
+                            Residence
+                        </div>
+                        <div class="value">
+                            <%= character.player.characteristics.RE %>
+                        </div>
+                    </div>
+                </div>
+                <div class='profileBody'><%= formatAbout() %></div>
+            </div>
+        </div>
+    </div>
+</div>

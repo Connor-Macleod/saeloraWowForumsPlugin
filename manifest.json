@@ -7,8 +7,9 @@
       "matches": [
         "*://*.battle.net/forums/*/wow/*"
       ],
-      "js": ["jquery-3.1.0.min.js", "content.js"],
+      "js": ["jquery-3.1.0.min.js", "lodash.js", "content.js"],
       "css": ["styling.css"]
     }
-  ]
+  ],
+   "web_accessible_resources": ["popup_template.html"]
 }
