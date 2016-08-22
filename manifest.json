@@ -11,5 +11,8 @@
       "css": ["styling.css"]
     }
   ],
-   "web_accessible_resources": ["popup_template.html"]
+   "web_accessible_resources": ["popup_template.html"],
+   "permissions": [
+        "*://*.battle.net/forums/*/wow/*"
+   ]
 }

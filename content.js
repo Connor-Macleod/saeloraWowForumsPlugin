@@ -39,7 +39,7 @@ $(document).ready(function ($) {
         if (postData.author.id === currentTopic.topicOpId) {
             $postDom.addClass("opPost");
         }
-        $postDom.find('.Author-avatar').append('<img class="customAvatar" src="http://wow.saelora.com/avatars/' + postData.author.id + '.png" />')
+        $postDom.find('.Author-avatar').append('<img class="customAvatar" src="http://wow.saelora.com/api/avatars/' + postData.author.id + '.png" />')
         $postDom.find(".customAvatar").on("error", function () {
             $(this).hide();
         });
@@ -80,7 +80,7 @@ $(document).ready(function ($) {
         return resultantObject;
     }
     function getTrpProfile(id, postDom) {
-        $.get('http://wow.saelora.com/profiles/' + id + '.json', function (data) {
+        $.get('http://wow.saelora.com/api/profiles/' + id + '.json', function (data) {
             if (data.error){
                 //do nothing
             } else {

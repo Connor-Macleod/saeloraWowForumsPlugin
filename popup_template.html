@@ -3,7 +3,7 @@
         <div class='profileContent'>
             <div class='profileContentConstrain'>
                 <div class='profileImage'>
-                    <img class='customAvatar' src='http://wow.saelora.com/avatars/<%= character.id %>.png'></img>
+                    <img class='customAvatar' alt='character portrait' src='http://wow.saelora.com/api/avatars/<%= character.id %>.png'></img>
                 </div>
                 <div class='profileName'>
                     <%= character.player.characteristics.TI %>
@@ -24,7 +24,7 @@
                     %>
                     <div class="glance">
                         <div class="glanceIcon">
-                            <img src="http://wow.saelora.com/icons/<%= character.player.misc.PE[i+1].IC.toLowerCase() %>.jpg" alt="icon" />
+                            <img src="http://wow.saelora.com/api/icons/<%= character.player.misc.PE[i+1].IC.toLowerCase() %>.jpg" alt="icon" />
                         </div>
                         <div class="glanceHover">
                             <div class="title">
